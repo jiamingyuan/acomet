@@ -1,12 +1,12 @@
-# my-dashboard
+# acomet
 
 个人工具网站。当前 V0.3（npm 版本 0.3.0）在 V0.2 Module Federation 宿主基础上整合 media-keeper 正式接入、统一 PingFang SC 字体、工具页布局与单一接入指引。宿主没有自建业务后端、登录或模拟接口。
 
-仓库：[jiamingyuan/my-dashboard](https://github.com/jiamingyuan/my-dashboard)。
+仓库：[jiamingyuan/acomet](https://github.com/jiamingyuan/acomet)。项目原名 my-dashboard，2026-10-28 改名为 acomet；V0.1–V0.3 的提交历史保留在原仓库 [jiamingyuan/my-dashboard](https://github.com/jiamingyuan/my-dashboard)。
 
 ## 开发与运行
 
-项目在本机使用 Node.js 开发；当前 `my-dashboard` 容器使用 Nginx 提供构建后的静态网页，访问 http://localhost:8080。容器不包含开发源码或 Node.js 开发环境，网页文件在 `/usr/share/nginx/html`，不挂载 Volume。
+项目在本机使用 Node.js 开发；当前运行容器（容器名仍为改名前的 `my-dashboard`）使用 Nginx 提供构建后的静态网页，访问 http://localhost:8080。容器不包含开发源码或 Node.js 开发环境，网页文件在 `/usr/share/nginx/html`，不挂载 Volume。
 
 ## 本机开发
 
@@ -36,7 +36,7 @@ npm run preview
 curl -fsS http://localhost:8080/version.json
 ```
 
-当前版本应返回 `{"name":"my-dashboard","version":"0.3.0"}`。此文件由构建生成，Nginx 禁用缓存；核对部署时还应比较构建文件和运行配置，而不只手动改版本标记。它与 modules.json 的 `version: 1` 清单格式无关，Media 模块也保留自己的独立版本。
+改名后的构建应返回 `{"name":"acomet","version":"0.3.0"}`；运行容器重新部署前仍返回改名前构建的 `my-dashboard`。此文件由构建生成，Nginx 禁用缓存；核对部署时还应比较构建文件和运行配置，而不只手动改版本标记。它与 modules.json 的 `version: 1` 清单格式无关，Media 模块也保留自己的独立版本。
 
 ## 回归测试
 
@@ -68,7 +68,7 @@ Playwright 自动在 127.0.0.1:4175 启动生产预览，在 4176 启动真实�
 
 UI 来源：[晨间设计](https://www.figma.com/design/P2EfZNJYj2PsdZLmaMzHMN?node-id=14-266) / [夜间设计](https://www.figma.com/design/P2EfZNJYj2PsdZLmaMzHMN?node-id=4-86)。宿主保留外壳；Media 工具页从 media-keeper 独立构建的远程组件加载，总览不加入 Media 内容。
 
-- 默认夜间，手动选择保存于 `my-dashboard.theme`；只接受 `night` / `morning`。存储不可用时仍能切换，不自动跟随系统主题。
+- 默认夜间，手动选择保存于 `acomet.theme`（首屏仍兼容读取改名前的 `my-dashboard.theme`）；只接受 `night` / `morning`。存储不可用时仍能切换，不自动跟随系统主题。
 - 桌面搜索位置为 264 × 38 的透明空白，无输入框、快捷键或点击行为。1200 以下为适配顶栏隐藏占位，768 以下使用模态导航抽屉。
 - 日期使用浏览器本地时间；Jiaming 为设计稿中的静态个人信息，不表示已登录账户。
 - 主题色与全站字体变量集中于 `tokens.css`。中英文、品牌、日期及控件统一使用 `PingFang SC`，未安装该字体的设备回退到系统 sans-serif；不打包 Apple 字体。图标来源见 `src/assets/icons/README.md`。

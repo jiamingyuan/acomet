@@ -1,10 +1,10 @@
-# 外部模块接入 my-dashboard 指引
+# 外部模块接入 acomet 指引
 
-适用版本：my-dashboard V0.3（npm 0.3.0）；沿用 V0.2 引入的组件与清单协议。本文面向在另一个项目中开发工具、希望把工具 UI 放进 my-dashboard 的开发者。
+适用版本：acomet V0.3（npm 0.3.0；项目原名 my-dashboard）；沿用 V0.2 引入的组件与清单协议。本文面向在另一个项目中开发工具、希望把工具 UI 放进 acomet 的开发者。
 
-子模块负责导出 React 组件并部署自己的构建产物；my-dashboard 负责外壳、菜单、路由和主题。子模块源码不用搬到宿主仓库，也不用和宿主打成同一个包。Module Federation 连接的是前端组件，子模块后端仍需单独提供 API。
+子模块负责导出 React 组件并部署自己的构建产物；acomet 负责外壳、菜单、路由和主题。子模块源码不用搬到宿主仓库，也不用和宿主打成同一个包。Module Federation 连接的是前端组件，子模块后端仍需单独提供 API。
 
-以下用 `ai-daily` 举例，所有名称、端口和地址都是演示配置，不代表项目已经接入 AI 日报。命令分为“子模块项目根目录”和“my-dashboard 项目根目录”两处执行。
+以下用 `ai-daily` 举例，所有名称、端口和地址都是演示配置，不代表项目已经接入 AI 日报。命令分为“子模块项目根目录”和“acomet 项目根目录”两处执行。
 
 ## 1. 准备子模块项目
 
@@ -164,7 +164,7 @@ export default function DashboardModule({
 
 导出的文件只负责组件，不调用 `createRoot`，不再包一层 `BrowserRouter`。原项目若需要独立运行，可保留 `main.tsx` 的挂载和独立入口，通过另一层包装复用业务组件。被宿主导入的入口不要直接依赖只在原项目 main.tsx 中初始化的 provider、样式或全局变量；需要的业务 provider 应由模块入口显式提供。
 
-my-dashboard 已提供侧栏、顶栏和页面标题，通常只导出工具内容区。CSS Modules 或独有类名前缀可减少样式冲突；避免远程样式重置 `html`、`body` 或所有按钮。全站字体为 `PingFang SC`；模块应继承宿主字体或使用 `font-family: var(--font-body)`，不要另设其他文字字体。未安装苹方的设备回退系统 sans-serif。背景、标题和强调色还可复用 `--canvas`、`--panel`、`--heading`、`--text-primary`、`--text-secondary`、`--accent-bg` 等语义变量；完整定义见 [tokens.css](../src/styles/tokens.css)。
+acomet 已提供侧栏、顶栏和页面标题，通常只导出工具内容区。CSS Modules 或独有类名前缀可减少样式冲突；避免远程样式重置 `html`、`body` 或所有按钮。全站字体为 `PingFang SC`；模块应继承宿主字体或使用 `font-family: var(--font-body)`，不要另设其他文字字体。未安装苹方的设备回退系统 sans-serif。背景、标题和强调色还可复用 `--canvas`、`--panel`、`--heading`、`--text-primary`、`--text-secondary`、`--accent-bg` 等语义变量；完整定义见 [tokens.css](../src/styles/tokens.css)。
 
 ## 4. 在本地构建和联调
 
@@ -186,9 +186,9 @@ http://127.0.0.1:8081/remoteEntry.js
 
 先使用构建后预览完成联通。子模块代码有变化时重新构建，并刷新宿主以重新加载入口；本文不将跨项目热更新作为已验证能力。
 
-## 5. 在 my-dashboard 登记模块
+## 5. 在 acomet 登记模块
 
-进入 my-dashboard 项目，编辑 [public/modules.json](../public/modules.json)。首次接入且清单为空时，示例为：
+进入 acomet 项目，编辑 [public/modules.json](../public/modules.json)。首次接入且清单为空时，示例为：
 
 ```json
 {
@@ -236,7 +236,7 @@ entry 也支持相对地址：相对路径按宿主应用的 base 解析，当�
 
 宿主启动时读取并校验整份清单；重复 id、冲突入口、非法字段或错误 JSON 会使整份清单加载失败，不会只启用其中一部分。清单读取超过 10 秒会报错，可重新加载工具列表。通过校验后只生成菜单，访问工具时才加载远程组件；加载超过 15 秒或组件渲染失败时显示错误提示，当前“重新加载”会刷新整个页面。侧栏和主题切换仍可用；修复服务或清单后再重试。
 
-目前运行的是 my-dashboard Nginx 容器，修改本机 public 文件后，还需在 my-dashboard 项目根目录执行：
+目前运行的是宿主 Nginx 容器（容器名仍为改名前的 `my-dashboard`），修改本机 public 文件后，还需在 acomet 项目根目录执行：
 
 ```sh
 docker cp public/modules.json my-dashboard:/usr/share/nginx/html/modules.json
@@ -285,12 +285,12 @@ https://tools.example.com/ai-daily/mf-manifest.json
 
 ## 8. 宿主侧回归检查
 
-宿主集成或共享依赖有变化时，可在 my-dashboard 项目根目录执行：
+宿主集成或共享依赖有变化时，可在 acomet 项目根目录执行：
 
 ```sh
 npm run lint
 npm run build
-npm run test:e2e -- --reporter=line --output=/tmp/my-dashboard-e2e
+npm run test:e2e -- --reporter=line --output=/tmp/acomet-e2e
 ```
 
 这里将截图与失败轨迹放到系统临时目录；Vite preview 仅用于本地验证。自动化测试会在 4175 启动宿主生产预览、在 4176 启动真正构建的测试远程，覆盖共享 React Hooks、远程 CSS 和字体继承、主题/子路由、停用配置、清单校验及加载失败恢复，同时运行外壳回归。测试 fixture 不会加入正式构建，也不代表已验证所有实际业务模块。

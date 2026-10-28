@@ -105,7 +105,7 @@ test('theme persists across refresh and keyboard switching preserves the URL', a
 })
 
 test('invalid saved theme defaults to night', async ({ page }) => {
-  await page.addInitScript(() => localStorage.setItem('my-dashboard.theme', 'unexpected'))
+  await page.addInitScript(() => localStorage.setItem('acomet.theme', 'unexpected'))
   await openShell(page)
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'night')
 })
@@ -124,7 +124,7 @@ for (const method of ['getItem', 'setItem'] as const) {
 }
 
 test('saved morning theme is applied before the application JavaScript loads', async ({ page }, testInfo) => {
-  await page.addInitScript(() => localStorage.setItem('my-dashboard.theme', 'morning'))
+  await page.addInitScript(() => localStorage.setItem('acomet.theme', 'morning'))
   let release!: () => void
   const gate = new Promise<void>(resolve => { release = resolve })
   await page.route('**/assets/*.js', async route => { await gate; await route.continue() })

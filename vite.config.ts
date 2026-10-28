@@ -22,7 +22,7 @@ export default defineConfig({
     },
     react(),
     federation({
-      name: 'my_dashboard',
+      name: 'acomet',
       remotes: {},
       shared: sharedDependencies,
       dts: false,

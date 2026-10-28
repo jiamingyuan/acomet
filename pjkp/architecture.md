@@ -1,6 +1,6 @@
-# my-dashboard 架构
+# acomet 架构
 
-核对：2026-10-26。当前版本 V0.3，以 V0.2 提交 `4ad4ace7cc5748861cdd6f1b98ae165203768408` 为差异基线；具体依赖以 package.json / package-lock.json 为准。
+核对：2026-10-26；2026-10-28 补充项目改名。当前版本 V0.3，以 V0.2 提交 `4ad4ace7cc5748861cdd6f1b98ae165203768408` 为差异基线；具体依赖以 package.json / package-lock.json 为准。
 
 ## 结构与边界
 
@@ -16,7 +16,7 @@
 | Nginx | 托管宿主静态产物；应用路由回退 index.html；同域 /media-keeper/ 整体代理到独立 media-keeper 容器，动态解析 Docker DNS，远程资源的 404 与缓存由模块 Nginx 负责 |
 | 后端 | 宿主没有自建后端；media-keeper 独立容器内的 NestJS API 提供只读查询，与模块 Nginx 共处一个容器，不再依赖宿主机 Node 进程。账户和共享数据策略仍未实施 |
 
-当前源码在本机；`my-dashboard` 是运行静态页面的独立容器，镜像为 `nginx:1.31-trixie`，镜像 ID `sha256:4c41e2d0a3a55b325ed572cd0200bdb72af1433c3daa2bca6ef8eea68ce504a2`，实际 Nginx 1.31.8。端口为 `127.0.0.1:8080 → 80`，静态目录 `/usr/share/nginx/html`，无 Volume。旧 compose.yaml 与 ops/development 记录的是过去的开发容器方案，不能当作当前运行配置。
+当前源码在本机 acomet 目录；Module Federation 宿主名、package 名与 version.json 项目名均为 `acomet`，主题存储键为 `acomet.theme`，首屏兼容读取改名前的 `my-dashboard.theme`。`my-dashboard` 是运行静态页面的独立容器（改名时未重命名，仍运行改名前构建），镜像为 `nginx:1.31-trixie`，镜像 ID `sha256:4c41e2d0a3a55b325ed572cd0200bdb72af1433c3daa2bca6ef8eea68ce504a2`，实际 Nginx 1.31.8。端口为 `127.0.0.1:8080 → 80`，静态目录 `/usr/share/nginx/html`，无 Volume。旧 compose.yaml 与 ops/development 记录的是过去的开发容器方案，不能当作当前运行配置。
 
 ## 设计原因与接入边界
 

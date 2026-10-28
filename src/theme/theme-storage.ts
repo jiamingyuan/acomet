@@ -1,5 +1,5 @@
 export type Theme = 'night' | 'morning'
-export const THEME_STORAGE_KEY = 'my-dashboard.theme'
+export const THEME_STORAGE_KEY = 'acomet.theme'
 
 export function initialTheme(): Theme {
   return document.documentElement.dataset.theme === 'morning' ? 'morning' : 'night'

@@ -1,4 +1,4 @@
-# my-dashboard V0.3 迭代记录
+# acomet V0.3 迭代记录
 
 ## 当前状态
 
@@ -41,3 +41,24 @@
 本轮发布目标为原仓库 [jiamingyuan/my-dashboard](https://github.com/jiamingyuan/my-dashboard) 的 main 分支；版本提交包含当前源码、配置、指引和 V0.1 / V0.2 / V0.3 历史，上传结果由该发布提交与远端 main 记录核对，不另建 tag。运行版本可由 [version.json](http://localhost:8080/version.json) 查询。
 
 本轮没有新增业务开发事项。公网托管、用户验收及未来业务范围尚未指定。
+
+## 同版本后续整理：项目改名为 acomet
+
+2026-10-28 用户要求“将 https://github.com/jiamingyuan/acomet 这个项目clone下来，把原名为my-dashboard的项目改名为acomet，并更新pjkp”。acomet 仓库以单个 Initial commit `9d5012a` 承载内容，与原仓库 V0.3 发布提交 3863e16 的文件一致；本次克隆到 `/Users/jiamingyuan/Desktop/ai-infra/acomet`，产品版本仍为 V0.3（0.3.0），没有新增功能。
+
+| 内容 | 实际变更 |
+| --- | --- |
+| 项目标识 | package.json / package-lock.json 名称、version.json 项目名、Module Federation 宿主名（原 `my_dashboard`）均改为 `acomet`；现有远程模块不引用宿主名 |
+| 页面 | 页面标题、描述与侧栏品牌字改为 acomet |
+| 主题存储 | 存储键改为 `acomet.theme`；首屏在新键缺失时读取 `my-dashboard.theme`，保留改名前的手动选择，下次切换写入新键 |
+| 文档 | README、模块接入指引与 pjkp 的项目名、本机路径和仓库地址改为 acomet；V0.1–V0.3 提交历史仍链接原仓库 |
+
+未改动的部分：
+
+- 运行容器仍名为 `my-dashboard`，未重命名或重新部署，[version.json](http://localhost:8080/version.json) 在重新部署前仍返回改名前构建的 `my-dashboard`；指引中的 docker 命令据此保留原容器名。
+- ops/debian、ops/development、ops/tooling 与 compose.yaml 是已取代方案的历史材料，各版记录中的用户原话与当时名称均保持原文。
+- 原本机目录 `/Users/jiamingyuan/Desktop/ai-infra/my-dashboard` 仍在，且有未提交的 OpenRouter 模块登记、代理配置与 pjkp 整理，这些未包含在 acomet 仓库中，本次没有并入。
+- 同级 media-keeper、useful-tools 的文档与测试配置仍按旧目录名 my-dashboard 引用宿主，属于各自仓库，本次未修改。
+- 原 GitHub 仓库 my-dashboard 未改动或归档；本次修改尚未提交或推送到 acomet。
+
+本次检查：Node.js 24.20.0 / npm 11.19.0 下 npm ci、lint 与生产构建通过，dist/version.json 为 `{"name":"acomet","version":"0.3.0"}`；18 项 Chromium 回归全部通过。另以临时用例确认旧键 morning 会在首屏生效、新键优先于旧键、标题与品牌字为 acomet，该用例未保留在仓库中。

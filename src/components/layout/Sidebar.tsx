@@ -11,7 +11,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
     <div className={styles.sidebar}>
       <div className={styles.brand}>
         <div className={styles.mark}><ThemedIcon name="brand" /></div>
-        <div><p className={styles.wordmark}>my-dashboard</p><p className={styles.subtitle}>PERSONAL WORKSPACE</p></div>
+        <div><p className={styles.wordmark}>acomet</p><p className={styles.subtitle}>PERSONAL WORKSPACE</p></div>
       </div>
       <nav aria-label="工作空间" className={styles.group}>
         <p className={styles.caption}>工作空间</p>

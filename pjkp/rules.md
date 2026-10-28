@@ -1,4 +1,4 @@
-# my-dashboard 规则
+# acomet 规则
 
 更新：2026-10-23。
 
